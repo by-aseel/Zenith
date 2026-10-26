@@ -7,7 +7,7 @@ import threading
 import unittest
 from unittest.mock import patch
 
-from meeting_assistant.server import AppServer
+from zenith.server import AppServer
 
 
 class ReviewTests(unittest.TestCase):
@@ -41,7 +41,7 @@ class ReviewTests(unittest.TestCase):
         mid = self.server.store.create_meeting("Imported audio offset")["id"]
         self.server.store.save_settings({"transcription_provider": "faster_whisper", "retain_audio": True})
         try:
-            with patch("meeting_assistant.server.transcribe_audio", return_value=[
+            with patch("zenith.server.transcribe_audio", return_value=[
                 {"start": 5.5, "end": 8.0, "text": "Evidence occurs later in the source file."},
                 {"start": 13.2, "end": 15.0, "text": "A second statement."},
             ]):

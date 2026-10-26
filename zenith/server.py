@@ -52,7 +52,7 @@ class AppServer(ThreadingHTTPServer):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "Minutes/" + __version__
+    server_version = "Zenith/" + __version__
     sys_version = ""
 
     def log_message(self, format, *args):
@@ -137,7 +137,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         except Exception as exc:
             # Known provider/capture errors are actionable; unexpected errors are not dumped.
-            if exc.__class__.__module__ in {"meeting_assistant.providers", "meeting_assistant.capture"}:
+            if exc.__class__.__module__ in {"zenith.providers", "zenith.capture"}:
                 self.json({"error": self.safe_error(exc)}, 422)
             else:
                 self.json({"error": "The operation could not finish. Check your provider settings and try again."}, 500)

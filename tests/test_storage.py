@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from meeting_assistant.storage import Store
+from zenith.storage import Store
 
 
 class StoreTests(unittest.TestCase):

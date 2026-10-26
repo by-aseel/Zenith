@@ -1,3 +1,3 @@
-"""Minutes: a local, evidence-backed meeting assistant."""
+"""Compatibility entry point for installations made before the Zenith rename."""
 
-__version__ = "1.0.0"
+from zenith import __version__

@@ -1,4 +1,4 @@
-/* Minutes: dependency-free local workspace. All imported/model text is rendered as text. */
+/* Zenith: dependency-free local workspace. All imported/model text is rendered as text. */
 "use strict";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -40,7 +40,7 @@ async function api(path, options = {}) {
   if (options.body && typeof options.body === "string" && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
   let response;
   try { response = await fetch(`/api${path}`, { ...options, headers, cache: "no-store" }); }
-  catch { throw new Error("The local app is unreachable. Check that the Minutes server is still running, then try again."); }
+  catch { throw new Error("The local app is unreachable. Check that the Zenith server is still running, then try again."); }
   const text = await response.text();
   let data;
   try { data = text ? JSON.parse(text) : {}; }
@@ -147,7 +147,7 @@ function showWelcome() {
   $("#workspace").hidden = true;
   $("#welcome").hidden = false;
   $("#page-loading").hidden = true;
-  document.title = "Minutes — Context-aware meeting assistant";
+  document.title = "Zenith — Context-aware meeting assistant";
   renderArchive();
 }
 
@@ -166,7 +166,7 @@ async function openMeeting(id, options = {}) {
   renderMeeting();
   renderConversation();
   renderArchive();
-  document.title = `${meeting.title} · Minutes`;
+  document.title = `${meeting.title} · Zenith`;
   if (options.segmentId) revealSegment(options.segmentId, options.audioOffset);
 }
 
@@ -293,7 +293,7 @@ function renderMessage(message) {
   const container = element("article", `message message-${user ? "user" : "assistant"}`);
   const label = element("div", "message-label");
   if (!user) label.append(icon("spark"));
-  label.append(document.createTextNode(user ? "You" : "Minutes"));
+  label.append(document.createTextNode(user ? "You" : "Zenith"));
   container.append(label, element("p", "message-text", message.content || data.answer || ""));
   if (!user && data.mode) container.append(element("span", "answer-mode", data.mode === "extractive" ? "Extractive answer · quoted evidence" : `${data.mode} answer`));
   if (!user && data.citations?.length) {

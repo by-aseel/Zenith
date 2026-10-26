@@ -1,4 +1,4 @@
-name: Meeting assistant checks
+name: Zenith checks
 
 on:
   push:

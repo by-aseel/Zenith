@@ -11,15 +11,15 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from meeting_assistant.demo import seed_demo
-from meeting_assistant.retrieval import RetrievalEngine
-from meeting_assistant.storage import Store
+from zenith.demo import seed_demo
+from zenith.retrieval import RetrievalEngine
+from zenith.storage import Store
 
 
 def evaluate():
     questions = json.loads((Path(__file__).parent / "questions.json").read_text(encoding="utf-8"))
     rows = []
-    with tempfile.TemporaryDirectory(prefix="minutes-eval-") as directory:
+    with tempfile.TemporaryDirectory(prefix="zenith-eval-") as directory:
         store = Store(Path(directory))
         meetings = seed_demo(store)["meetings"]
         meetings = [store.get_meeting(m["id"]) for m in meetings]

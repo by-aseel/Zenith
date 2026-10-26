@@ -7,7 +7,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from unittest.mock import patch
 
-from meeting_assistant.server import AppServer
+from zenith.server import AppServer
 
 
 class ServerTests(unittest.TestCase):

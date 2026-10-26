@@ -2,7 +2,7 @@
 
 Run `python evaluation/run.py` from the project directory. It creates a temporary archive, loads three original synthetic meetings, evaluates ten fixed questions with three retrieval strategies, and writes `evaluation/results.local.json`. It needs no API keys, models, audio hardware, or network.
 
-`questions.json` contains the questions, optional prior conversation and meeting scope, answerability labels, and gold passage indices `[meeting_index, segment_index]` into `meeting_assistant/demo.py`. The same fixture is used in the UI demo. Gold labels intentionally include relevant context from multiple meetings rather than only the final date.
+`questions.json` contains the questions, optional prior conversation and meeting scope, answerability labels, and gold passage indices `[meeting_index, segment_index]` into `zenith/demo.py`. The same fixture is used in the UI demo. Gold labels intentionally include relevant context from multiple meetings rather than only the final date.
 
 | Strategy | What it represents |
 |---|---|

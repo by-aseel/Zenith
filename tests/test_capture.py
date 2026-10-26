@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 import wave
 
-from meeting_assistant import capture, providers
+from zenith import capture, providers
 
 
 class FakeStore:

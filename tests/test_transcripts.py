@@ -1,6 +1,6 @@
 import unittest
 
-from meeting_assistant.transcripts import parse_transcript, seconds
+from zenith.transcripts import parse_transcript, seconds
 
 
 class TranscriptTests(unittest.TestCase):

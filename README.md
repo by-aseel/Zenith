@@ -1,17 +1,17 @@
-# Minutes — Context Aware Meeting Assistant
+# Zenith
 
 A local meeting archive that turns timestamped transcripts into searchable evidence. Import an existing meeting, record microphone and computer audio separately, and ask questions about one meeting or several sessions. Answers link back to stored transcript passages and, when retained, their audio.
 
-Built from the **Context Aware Meeting Assistant** semester-project proposal. This repository contains the complete standalone Python application, documentation, tests, and reproducible evaluation.
+Zenith is built from the **Context Aware Meeting Assistant** semester-project proposal. This repository contains the standalone application, documentation, tests, and reproducible evaluation.
 
 ## Start in one minute
 
 Use **Python 3.11 or newer**. Python 3.11/3.12 is recommended if you plan to install speech or desktop extras; third-party wheel availability varies on newer Python releases.
 
 ```powershell
-git clone https://github.com/by-aseel/Context-Aware-Meeting-Assistant.git
-cd Context-Aware-Meeting-Assistant
-python -m meeting_assistant --demo
+git clone https://github.com/by-aseel/Context-Aware-Meeting-Assistant.git Zenith
+cd Zenith
+python -m zenith --demo
 ```
 
 The browser opens at **http://127.0.0.1:8765**. The core app, demo, imports, local retrieval, evaluation, and tests require **no pip packages, API keys, or network**. You can also double-click `launch.bat` on Windows, or run `./launch.ps1 -Demo` in PowerShell.
@@ -28,12 +28,18 @@ The three demo meetings are original synthetic fixtures, clearly labeled in the 
 ### Useful launch options
 
 ```powershell
-python -m meeting_assistant --demo --data-dir .data
-python -m meeting_assistant --port 8766 --no-browser
-python -m meeting_assistant --help
+python -m zenith --demo --data-dir .data
+python -m zenith --port 8766 --no-browser
+python -m zenith --help
 ```
 
-The default archive is `~/.meeting-assistant/` (on Windows, typically `C:\Users\<you>\.meeting-assistant`). Override it with `--data-dir` or `MINUTES_DATA_DIR`. Stop the server with **Ctrl+C** after stopping any active recording and waiting for transcription to finish. Closing a browser tab does not stop the Python application.
+New installations save their archive in `~/.zenith/` (on Windows, typically `C:\Users\<you>\.zenith`). Override it with `--data-dir` or `ZENITH_DATA_DIR`. Stop Zenith with **Ctrl+C** after stopping any active recording and waiting for transcription to finish. Closing a browser tab does not stop the Python application.
+
+### Upgrading an existing installation
+
+Zenith 1.1 keeps an existing archive at `~/.meeting-assistant/` accessible automatically when there is no database at `~/.zenith/`. It does not move or delete saved meetings. An explicit `--data-dir` takes priority, followed by `ZENITH_DATA_DIR`; the previous `MINUTES_DATA_DIR` variable remains supported as a fallback. The previous `python -m meeting_assistant` command also launches Zenith.
+
+The Python package is now `zenith`, the installable distribution is `zenith-meeting-assistant`, and the installed terminal command is `zenith`. For installations made with pip, use a fresh virtual environment when switching from the previous distribution, then install the extras you need below. You can run `zenith --demo` after installation, or `python -m zenith --demo` directly from the project directory.
 
 ## Features
 
@@ -152,8 +158,8 @@ The evaluation creates its own temporary archive, runs ten labeled questions aga
 ## Project layout
 
 ```text
-Context-Aware-Meeting-Assistant/
-  meeting_assistant/
+Zenith/
+  zenith/
     __main__.py        command-line launcher and optional desktop window
     server.py          local HTTP API, request isolation, imports and playback
     storage.py         SQLite archive, full-text index and settings
@@ -163,6 +169,7 @@ Context-Aware-Meeting-Assistant/
     capture.py         separate capture workers and transcription queue
     demo.py            original synthetic meeting fixture
     static/            self-contained browser interface
+  meeting_assistant/   compatibility launcher for the previous Python command
   tests/               standard-library automated tests
   evaluation/          fixed questions, gold evidence, metrics and protocol
   pyproject.toml       installable package and optional dependencies

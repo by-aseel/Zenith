@@ -3,8 +3,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from meeting_assistant.retrieval import RetrievalEngine
-from meeting_assistant.storage import Store
+from zenith.retrieval import RetrievalEngine
+from zenith.storage import Store
 
 
 class RetrievalTests(unittest.TestCase):
@@ -40,7 +40,7 @@ class RetrievalTests(unittest.TestCase):
 
     def test_no_evidence_and_empty_scope_abstain_without_generation(self):
         self.store.save_settings({"chat_provider": "openai"})
-        with patch("meeting_assistant.providers.generate_answer") as generate:
+        with patch("zenith.providers.generate_answer") as generate:
             result = self.engine.answer("What was the quasar telescope aperture?")
             self.assertTrue(result["insufficient_evidence"])
             self.assertEqual(result["citations"], [])
@@ -62,28 +62,28 @@ class RetrievalTests(unittest.TestCase):
         self.store.save_settings({"embedding_provider": "sentence_transformers"})
         def embed(texts, settings):
             return [[1.0, 0.0]] + [[1.0, 0.0] if "SQLite" in text else [0.0, 1.0] for text in texts[1:]]
-        with patch("meeting_assistant.providers.embed_texts", side_effect=embed):
+        with patch("zenith.providers.embed_texts", side_effect=embed):
             result = self.engine.answer("Which persistence technology enables disconnected operation?", strategy="basic")
         self.assertFalse(result["insufficient_evidence"])
         self.assertIn("SQLite", result["citations"][0]["text"])
 
     def test_generated_citations_are_validated_and_unknown_ids_fall_back(self):
         self.store.save_settings({"chat_provider": "openai"})
-        with patch("meeting_assistant.providers.generate_answer", return_value="The pilot moved to October 22. [E1]"):
+        with patch("zenith.providers.generate_answer", return_value="The pilot moved to October 22. [E1]"):
             generated = self.engine.answer("Atlas launch", [self.second])
         self.assertEqual(generated["mode"], "generated")
         self.assertEqual([c["id"] for c in generated["citations"]], ["E1"])
         for invalid in ("The launch was cancelled. [E999]", "No references.",
                         "First paragraph without a citation.\n\nSecond paragraph. [E1]", "It moved. [E1, E2]"):
-            with patch("meeting_assistant.providers.generate_answer", return_value=invalid):
+            with patch("zenith.providers.generate_answer", return_value=invalid):
                 fallback = self.engine.answer("Atlas launch", [self.second])
             self.assertEqual(fallback["mode"], "extractive")
             self.assertNotIn("cancelled", fallback["answer"])
 
     def test_provider_exceptions_do_not_leak_secrets(self):
         self.store.save_settings({"chat_provider": "openai", "embedding_provider": "openai"})
-        with patch("meeting_assistant.providers.generate_answer", side_effect=RuntimeError("secret-api-key")), \
-             patch("meeting_assistant.providers.embed_texts", side_effect=RuntimeError("secret-api-key")):
+        with patch("zenith.providers.generate_answer", side_effect=RuntimeError("secret-api-key")), \
+             patch("zenith.providers.embed_texts", side_effect=RuntimeError("secret-api-key")):
             result = self.engine.answer("Atlas launch")
         self.assertNotIn("secret-api-key", str(result))
         self.assertEqual(result["mode"], "extractive")

@@ -81,7 +81,7 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 
 def _request(settings, kind, route, payload, content_type="application/json"):
     base, key = _endpoint(settings, kind)
-    headers = {"Content-Type": content_type, "Accept": "application/json", "User-Agent": "MeetingAssistant/1.0"}
+    headers = {"Content-Type": content_type, "Accept": "application/json", "User-Agent": "Zenith/1.1"}
     if key:
         headers["Authorization"] = "Bearer " + key
     data = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8") if isinstance(payload, dict) else payload
@@ -180,7 +180,7 @@ def _segments(items, duration=0.0):
 
 
 def _multipart(fields, path):
-    boundary = "MeetingAssistant" + uuid.uuid4().hex
+    boundary = "Zenith" + uuid.uuid4().hex
     parts = []
     for name, value in fields.items():
         parts.append(f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n'.encode("utf-8"))

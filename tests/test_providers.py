@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 import urllib.error
 import wave
 
-from meeting_assistant import providers
+from zenith import providers
 
 
 class ProvidersTests(unittest.TestCase):

@@ -1,6 +1,6 @@
-# Internal integration contract
+# Zenith integration contract
 
-Project package: `meeting_assistant`, Python 3.11+, stdlib-only default. SQLite archive. Local HTTP app on 127.0.0.1. Optional pywebview native window. Do not edit the parent project's files.
+Project package: `zenith`, Python 3.11+, stdlib-only default. SQLite archive. Local HTTP app on 127.0.0.1. Optional pywebview native window. Distribution: `zenith-meeting-assistant`; command: `zenith`. The `meeting_assistant` package preserves the previous Python launch command.
 
 ## Storage / retrieval
 
