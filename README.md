@@ -9,7 +9,7 @@ Zenith is built from the **Context Aware Meeting Assistant** semester-project pr
 Use **Python 3.11 or newer**. Python 3.11/3.12 is recommended if you plan to install speech or desktop extras; third-party wheel availability varies on newer Python releases.
 
 ```powershell
-git clone https://github.com/by-aseel/Context-Aware-Meeting-Assistant.git Zenith
+git clone https://github.com/by-aseel/Zenith.git
 cd Zenith
 python -m zenith --demo
 ```
