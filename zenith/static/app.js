@@ -295,28 +295,53 @@ function renderMessage(message) {
   if (!user) label.append(icon("spark"));
   label.append(document.createTextNode(user ? "You" : "Zenith"));
   container.append(label, element("p", "message-text", message.content || data.answer || ""));
-  if (!user && data.mode) container.append(element("span", "answer-mode", data.mode === "extractive" ? "Extractive answer · quoted evidence" : `${data.mode} answer`));
-  if (!user && data.citations?.length) {
-    container.append(element("h4", "evidence-heading", `${data.citations.length} source${data.citations.length === 1 ? "" : "s"} · open to verify`));
-    for (const citation of data.citations) {
-      const card = textButton("", "evidence-card", () => followEvidence(citation).catch(report));
-      const top = element("span", "evidence-top");
-      top.append(element("span", "evidence-id", citation.id || "Source"), element("span", "evidence-meeting", citation.meeting_title || "Meeting"), element("span", "evidence-time", `${time(citation.start)} ↗`));
-      card.append(top, element("span", "evidence-quote", citation.text));
-      card.setAttribute("aria-label", `Open ${citation.id || "source"} in ${citation.meeting_title || "meeting"} at ${time(citation.start)}: ${String(citation.text || "").slice(0, 120)}`);
-      container.append(card);
-    }
+
+  if (!user && data.mode) {
+    const fallback = data.steps?.some(step => step.stage === "fallback");
+    const description = data.mode === "generated" ? "Direct answer · cited evidence"
+      : fallback ? "Source excerpts · answer model unavailable" : "Source excerpts · local mode";
+    container.append(element("span", "answer-mode", description));
   }
-  if (!user && data.steps?.length) {
-    const details = element("details", "retrieval-details");
-    details.append(element("summary", "", "How this answer was found"));
-    const steps = element("ol", "retrieval-steps");
-    for (const step of data.steps) {
-      const item = element("li");
-      item.append(element("strong", "", String(step.stage || "Retrieval").replace(/_/g, " ")), element("span", "", step.detail || ""));
-      steps.append(item);
+
+  // Keep the answer readable first. Source passages and retrieval checks are
+  // available only when the user asks to inspect them.
+  if (!user && (data.citations?.length || data.steps?.length)) {
+    const details = element("details", "answer-explanation");
+    const summary = element("summary", "", "Why this answer?");
+    summary.setAttribute("aria-label", "Show the evidence and retrieval steps for this response");
+    details.append(summary);
+    details.append(element("p", "explanation-note",
+      "This shows supporting transcript passages and retrieval checks, not the model's private reasoning. Speaker labels have not been independently verified."));
+
+    if (data.citations?.length) {
+      details.append(element("h4", "evidence-heading",
+        `${data.citations.length} supporting passage${data.citations.length === 1 ? "" : "s"} · open to verify`));
+      for (const citation of data.citations) {
+        const card = textButton("", "evidence-card", () => followEvidence(citation).catch(report));
+        const top = element("span", "evidence-top");
+        top.append(element("span", "evidence-id", citation.id || "Source"),
+          element("span", "evidence-meeting", citation.meeting_title || "Meeting"),
+          element("span", "evidence-time", `${time(citation.start)} ↗`));
+        card.append(top);
+        if (citation.speaker) card.append(element("span", "evidence-speaker", `Transcript speaker: ${citation.speaker} (unverified)`));
+        card.append(element("span", "evidence-quote", citation.text));
+        card.setAttribute("aria-label",
+          `Open ${citation.id || "source"} in ${citation.meeting_title || "meeting"} at ${time(citation.start)}: ${String(citation.text || "").slice(0, 120)}`);
+        details.append(card);
+      }
     }
-    details.append(steps);
+
+    if (data.steps?.length) {
+      details.append(element("h4", "evidence-heading", "Search and validation steps"));
+      const steps = element("ol", "retrieval-steps");
+      for (const step of data.steps) {
+        const item = element("li");
+        item.append(element("strong", "", String(step.stage || "Retrieval").replace(/_/g, " ")),
+          element("span", "", step.detail || ""));
+        steps.append(item);
+      }
+      details.append(steps);
+    }
     container.append(details);
   }
   return container;
