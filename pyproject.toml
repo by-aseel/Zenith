@@ -24,4 +24,4 @@ zenith = "zenith.__main__:main"
 include = ["zenith*", "meeting_assistant*"]
 
 [tool.setuptools.package-data]
-zenith = ["static/*.html", "static/*.css", "static/*.js"]
+zenith = ["static/*.html", "static/*.css", "static/*.js", "static/*.svg"]

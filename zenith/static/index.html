@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#24232e">
   <title>Zenith — Context-aware meeting assistant</title>
   <link rel="stylesheet" href="/static/app.css">
+  <link rel="icon" type="image/svg+xml" href="/static/zenith-favicon.svg">
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -28,8 +29,8 @@
   <a class="skip-link" href="#main">Skip to meeting</a>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Meeting archive">
-      <a href="#" class="brand" id="brand-link" aria-label="Zenith home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>Zenith</a>
-      <p class="brand-caption">A little more present.</p>
+      <a href="#" class="brand" id="brand-link" aria-label="Zenith home"><img class="brand-mark" src="/static/zenith-mark.svg" width="44" height="44" alt="">Zenith</a>
+      <p class="brand-caption">Context. Clarity. Zenith.</p>
       <button class="button new-button" id="new-meeting"><svg class="icon"><use href="#i-plus"/></svg> New meeting <kbd>N</kbd></button>
       <div class="archive-label"><h2>Your meetings</h2><span id="meeting-count">0</span></div>
       <label class="archive-search"><svg class="icon"><use href="#i-search"/></svg><input id="archive-search" type="search" placeholder="Find a meeting" aria-label="Search meeting archive"></label>
@@ -44,8 +45,15 @@
       <header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" id="toggle-sidebar" aria-label="Toggle meeting archive" aria-expanded="false"><svg class="icon"><use href="#i-menu"/></svg></button><span class="app-descriptor">ZENITH · CONTEXT-AWARE MEETING ASSISTANT</span></div><div class="connection-status" id="connection-status"><span class="status-dot"></span> Local workspace</div></header>
       <div class="capture-banner" id="capture-banner" hidden><div><span class="recording-dot"></span><strong>Recording</strong><span id="recording-description"></span></div><button class="button button-small" id="stop-recording">Stop &amp; save</button></div>
       <section class="welcome" id="welcome" hidden>
-        <div class="welcome-copy"><span class="eyebrow">MAKE ROOM FOR THE CONVERSATION</span><h1>Good conversations.<br><em>Nothing lost.</em></h1><p>Keep your meetings in one place. Find the decision, the detail, or the next step—with the conversation to back it up.</p><div class="welcome-actions"><button class="button button-primary" id="welcome-new">Start a meeting <svg class="icon"><use href="#i-arrow"/></svg></button><button class="button button-plain" id="welcome-demo">Try sample meetings</button></div><div class="welcome-footnote"><span class="status-dot"></span> Your archive stays on this device. You choose your AI providers.</div></div>
-        <div class="welcome-art" aria-hidden="true"><div class="art-orbit"></div><div class="art-note"><span class="art-note-tag">THE IMPORTANT PART</span><div class="art-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>“Let’s make it happen.”</p><div class="art-note-foot"><span>Decision captured</span><span>02:34 ↗</span></div></div><div class="art-pill"><svg class="icon"><use href="#i-check"/></svg> A source for every answer</div></div>
+        <div class="welcome-copy"><span class="eyebrow">A HIGHER PERSPECTIVE</span><h1>Context connected.<br><em>Understanding elevated.</em></h1><p>Connect the details across your meetings. Trace decisions to their source and turn the full context into a clearer understanding.</p><div class="welcome-actions"><button class="button button-primary" id="welcome-new">Start a meeting <svg class="icon"><use href="#i-arrow"/></svg></button><button class="button button-plain" id="welcome-demo">Try sample meetings</button></div><div class="welcome-footnote"><span class="status-dot"></span> Your archive stays on this device. You choose your AI providers.</div></div>
+        <div class="welcome-art celestial-art" aria-hidden="true">
+          <div class="celestial-halo"></div>
+          <span class="celestial-label">THE ZENITH OF UNDERSTANDING</span>
+          <img class="celestial-emblem" src="/static/zenith-mark.svg" width="280" height="280" alt="">
+          <span class="celestial-caption">Every detail, connected.</span>
+          <span class="celestial-coordinate coordinate-one">CONTEXT</span>
+          <span class="celestial-coordinate coordinate-two">CLARITY</span>
+        </div>
         <div class="welcome-features"><article><span>01 / CAPTURE</span><h3>Be in the room.</h3><p>Record your microphone and system audio separately, or bring an existing transcript.</p></article><article><span>02 / REMEMBER</span><h3>Keep the context.</h3><p>A searchable archive with timestamps and clear source labels.</p></article><article><span>03 / ASK</span><h3>Find the thread.</h3><p>Ask across one meeting or many. Follow the evidence back to the exact moment.</p></article></div>
       </section>
       <section class="workspace" id="workspace" hidden>

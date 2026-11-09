@@ -159,12 +159,12 @@ class Handler(BaseHTTPRequestHandler):
     def route(self, path, query):
         store = self.server.store
         method = self.command
-        if method in {"GET", "HEAD"} and path in {"/", "/index.html", "/app.css", "/app.js", "/static/app.css", "/static/app.js"}:
+        if method in {"GET", "HEAD"} and path in {"/", "/index.html", "/app.css", "/app.js", "/static/app.css", "/static/app.js", "/static/zenith-mark.svg", "/static/zenith-favicon.svg"}:
             name = "index.html" if path in {"/", "/index.html"} else path.rsplit("/", 1)[1]
             content = (STATIC / name).read_text(encoding="utf-8")
             if name == "index.html":
                 content = content.replace("__APP_TOKEN__", json.dumps(self.server.token))
-            self.send_bytes(content.encode("utf-8"), {"index.html": "text/html", "app.css": "text/css", "app.js": "text/javascript"}[name] + "; charset=utf-8")
+            self.send_bytes(content.encode("utf-8"), {"index.html": "text/html", "app.css": "text/css", "app.js": "text/javascript", "zenith-mark.svg": "image/svg+xml", "zenith-favicon.svg": "image/svg+xml"}[name] + "; charset=utf-8")
         elif path == "/api/health" and method == "GET":
             self.json({"status": "ok", "version": __version__})
         elif path == "/api/settings" and method == "GET":

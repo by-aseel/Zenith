@@ -1,4 +1,8 @@
+<img src="zenith/static/zenith-mark.svg" alt="Zenith celestial logo" width="96" height="96">
+
 # Zenith
+
+**Context connected. Understanding elevated.**
 
 A local meeting archive that turns timestamped transcripts into searchable evidence. Import an existing meeting, record microphone and computer audio separately, and ask questions about one meeting or several sessions. Answers link back to stored transcript passages and, when retained, their audio.
 
