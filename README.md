@@ -112,6 +112,28 @@ Audio upload accepts WAV, MP3, M4A, FLAC, OGG, WebM, and MP4, up to 50 MiB local
 
 **Export** downloads meeting metadata, segments, and saved chat as JSON. **Delete** removes that meeting's transcript, messages, and owned audio directory. It does not remove unrelated files or provider-side data. To back up the whole archive, stop the app and copy its data directory, including the SQLite database and `audio/` folder. The database also contains provider settings and locally stored credentials; protect the backup accordingly.
 
+## Direct answers with local Ollama
+
+By default, Zenith works without a language model and shows verbatim transcript excerpts. To receive a **concise direct answer** first while keeping the transcript evidence one click away, configure a local Ollama model:
+
+1. On Windows, install [Ollama](https://ollama.com/download/windows) and launch it.
+2. In PowerShell, run `ollama pull llama3.2:3b` (about 2 GB; use `llama3.2:1b` if your machine is memory-constrained).
+3. In Zenith, open **Settings → Answers**, select **Ollama · local model**, set the **Model** to `llama3.2:3b` and the **API base URL** to `http://localhost:11434/v1`. Leave the API key empty and external processing consent off for this local model.
+4. Save settings and ask a question about a meeting that contains transcript passages.
+
+Zenith will request a short answer with citations to the selected evidence. Click **Why this answer?** to expand transcript excerpts, timestamps, speaker labels and retrieval/validation steps. This panel describes **auditable evidence**, not the model's private internal reasoning. Source cards open the associated passage or retained audio. Speaker names in transcripts remain unverified labels.
+
+If Ollama is not running, the model is unavailable, or the answer lacks valid evidence IDs, Zenith safely falls back to source excerpts and labels the response as such. A valid citation ID confirms the passage was retrieved, **not** that every statement is factually supported; verify consequential answers against the original meeting.
+
+For a quick check, import this transcript into a new meeting:
+
+```text
+[00:00] Aseel: We will test Zenith on Zoom this Friday.
+[00:10] Ali: I will implement the audio recording system.
+```
+
+Ask: **Who will implement the audio recording system?** A generated answer should say something like **According to the transcript, Ali will implement the audio recording system. [E1]**. If it only shows quotations, check that the **Answers** provider is Ollama and `ollama list` shows the configured model.
+
 ## Provider settings
 
 The three provider choices are independent. The default is manual transcript import, local word matching, and extractive answers.
