@@ -183,6 +183,8 @@ class ProvidersTests(unittest.TestCase):
         self.assertEqual(result, "Agreed Friday. [E1]")
         self.assertEqual([item["role"] for item in payload["messages"]], ["system", "user"])
         self.assertIn("untrusted data", payload["messages"][0]["content"])
+        self.assertIn("concise, direct answer", payload["messages"][0]["content"])
+        self.assertIn("speaker labels", payload["messages"][0]["content"])
         data = json.loads(payload["messages"][1]["content"])
         self.assertEqual(data["evidence"][0]["id"], "E1")
         self.assertEqual(data["conversation_history"], [{"role": "user", "content": "Earlier"}])
